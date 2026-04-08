@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { usePathname } from 'next/navigation';
 import SidebarWrapper from '@/components/SidebarWrapper';
 import TopBarWrapper from '@/components/TopBarWrapper';
@@ -17,9 +19,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     <div className="shell">
       <SidebarWrapper />
       <div className="main-col">
-        <TopBarWrapper />
+        <React.Suspense fallback={<div style={{ height: '60px', background: 'white' }} />}>
+          <TopBarWrapper />
+        </React.Suspense>
         <div className="content">
-          {children}
+          <React.Suspense fallback={<div className="pnl on">Loading...</div>}>
+            {children}
+          </React.Suspense>
         </div>
       </div>
       <MasterDrawerWrapper />

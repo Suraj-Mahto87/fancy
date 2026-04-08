@@ -65,6 +65,17 @@ interface OverviewTabProps {
 
 const OverviewTab: React.FC<OverviewTabProps> = ({ stats, compare, targets }) => {
   const compareText = compare === 'month' ? 'last month' : 'last year';
+  
+  const safeStats = React.useMemo(() => {
+    return {
+      northStar: stats?.northStar || 0,
+      activePlanners: stats?.activePlanners || 0,
+      eventsLive: stats?.eventsLive || 0,
+      guestsInvited: stats?.guestsInvited || 0,
+      rsvpRate: stats?.rsvpRate || 0
+    };
+  }, [stats]);
+
   return (
     <div className="pnl on">
       <div>
@@ -82,7 +93,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ stats, compare, targets }) =>
         <div className="ns">
           <div>
             <div className="ns-ey">Monthly North Star</div>
-            <div className="ns-n">{fmtInt(stats.northStar)}</div>
+            <div className="ns-n">{fmtInt(safeStats.northStar)}</div>
             <div className="ns-d">Events that received their<br />first RSVP this month</div>
             <div className="ns-delta">— vs {compareText}</div>
           </div>
@@ -92,7 +103,7 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ stats, compare, targets }) =>
               <span className="ns-tl">Target: {targets.northstar} events</span>
             </div>
             <div className="ns-bo">
-              <div className="ns-bf" style={{ width: ratio(stats.northStar, targets.northstar) + '%' }}></div>
+              <div className="ns-bf" style={{ width: ratio(safeStats.northStar, targets.northstar) + '%' }}></div>
             </div>
             <div className="ns-why">
               Why this metric: a planner who has received RSVPs rarely churns. This is the moment Fancy delivers its core promise.
@@ -104,10 +115,10 @@ const OverviewTab: React.FC<OverviewTabProps> = ({ stats, compare, targets }) =>
       <div>
         <div className="sec-lbl">Primary KPIs</div>
         <div className="kg">
-          <KpiCard label="Active Planners" value={stats.activePlanners} compareText={compareText} target={targets.planners} />
-          <KpiCard label="Events Live" value={stats.eventsLive} compareText={compareText} target={targets.events} />
-          <KpiCard label="RSVP Rate" value={stats.rsvpRate == null ? '—' : fmtPct(stats.rsvpRate, 0)} compareText={compareText} target={targets.rsvp + '%'} progress={stats.rsvpRate} targetVal={targets.rsvp} />
-          <KpiCard label="Guests Reached" value={stats.guestsInvited} compareText={compareText} target={targets.guests} />
+          <KpiCard label="Active Planners" value={safeStats.activePlanners} compareText={compareText} target={targets.planners} />
+          <KpiCard label="Events Live" value={safeStats.eventsLive} compareText={compareText} target={targets.events} />
+          <KpiCard label="RSVP Rate" value={safeStats.rsvpRate == null ? '—' : fmtPct(safeStats.rsvpRate, 0)} compareText={compareText} target={targets.rsvp + '%'} progress={safeStats.rsvpRate} targetVal={targets.rsvp} />
+          <KpiCard label="Guests Reached" value={safeStats.guestsInvited} compareText={compareText} target={targets.guests} />
           <KpiCard label="D7 Retention" value="—" compareText={compareText} target={targets.retention + '%'} />
         </div>
       </div>

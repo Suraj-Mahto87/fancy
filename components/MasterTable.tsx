@@ -190,6 +190,9 @@ export default function MasterTable({
 function getVal(r: any, col: Column) {
   const v = r[col.key];
   if (col.sort === 'num') return Number(v || 0);
-  if (col.sort === 'date') return v ? asDate(v).getTime() : 0;
+  if (col.sort === 'date') {
+    const d = asDate(v);
+    return d ? d.getTime() : 0;
+  }
   return String(v ?? '').toLowerCase();
 }
