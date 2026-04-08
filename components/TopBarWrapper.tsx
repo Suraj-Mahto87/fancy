@@ -113,7 +113,7 @@ const TopBarWrapper: React.FC = () => {
       )}
 
       {showLogoutConfirm && (
-        <div className="mo on" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={() => setShowLogoutConfirm(false)}>
+        <div className="mo on" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }} onClick={() => setShowLogoutConfirm(false)}>
           <div className="mp" style={{ maxWidth: '360px', textAlign: 'center' }} onClick={(e) => e.stopPropagation()}>
             <div style={{ padding: '24px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '16px' }}>Logout Confirmation</h2>
