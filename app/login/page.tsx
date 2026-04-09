@@ -48,11 +48,11 @@ export default function LoginPage() {
           <h2 className="login-h2">Sign in</h2>
           
           {/* Email Divider as seen in image (optional since Google is removed) */}
-          <div className="login-divider">
+          {/* <div className="login-divider">
               <div className="login-divider-line"></div>
               <span className="login-divider-text">or continue with email</span>
               <div className="login-divider-line"></div>
-          </div>
+          </div> */}
 
           <form onSubmit={handleSubmit} className="login-form">
             {error && (
